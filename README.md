@@ -14,32 +14,7 @@ Explain how you implemented the checklist above step-by-step :
 
 Create a diagram that contains the request client to a Django-based web application and the response it gives, and explain the relationship between urls.py, views.py, models.py, and the html file.
 
-DAM-SHOP
-├── env
-├── main
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── migrations
-│   │   ├── 0001_initial.py
-│   │   └── __init__.py
-│   ├── models.py
-│   ├── templates
-│   │   └── main.html
-│   ├── tests.py
-│   ├── urls.py
-│   └── views.py
-├── dam_shop
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── manage.py
-├── .gitignore
-├── requirements.txt
-├── README.md
-└── db.sqlite3
+![](image/diagram.png)
 
 
 Explain the use of git in software development!
