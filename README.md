@@ -1,3 +1,6 @@
+Link to the PWS application : http://damar-aryaputra-damshop.pbp.cs.ui.ac.id/
+
+
 Explain how you implemented the checklist above step-by-step :
 - Create a new directory with the name dam-shop
 - Enable virtual environment and install requirements.txt 
