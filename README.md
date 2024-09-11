@@ -1,6 +1,6 @@
 Link to the PWS application : http://damar-aryaputra-damshop.pbp.cs.ui.ac.id/
 
-
+ASSIGNMEN 2
 Explain how you implemented the checklist above step-by-step :
 - Create a new directory with the name dam-shop
 - Enable virtual environment and install requirements.txt 
@@ -32,5 +32,17 @@ Why is the Django model called an ORM?
 
 The Django model is called an ORM (Object-Relational Mapping) because it allows developers to interact with a relational database using Python objects, rather than writing raw SQL queries. In an ORM, database tables are represented as Python classes (models), and rows in these tables are instances of those classes. Django’s ORM automatically generates the necessary SQL to create, retrieve, update, and delete records based on the model’s structure. This abstraction simplifies database interactions, allowing developers to work in Python while the ORM handles the translation between Python objects and database records.
 
+
+Assignment 3
+
+
+Why do we need csrf_token when creating a form in Django?
+To prevent CSRF attack where a malicious website tricks a user's browser into making unwanted requests to another site where the user is authenticated.
+
+What could happen if we did not use csrf_token on a Django form? 
+If someone do a successful CSRF attack, the attacker causes the victim user to carry out an action unintentionally.
+
+How could this be leveraged by an attacker?
+For example, this might be to change the email address on their account, to change their password, or to make a funds transfer depending on the nature of the action.
 
 
