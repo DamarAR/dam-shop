@@ -1,5 +1,43 @@
-<h1>Dam-Shop</h1>
+{% extends 'base.html' %}
+ {% block content %}
+ <h1>Dam Shop</h1>
 
-<h4>Appname: {{ appname }}</h4>
-<h4>Name: {{ name }}</h4>
-<h4>Class: {{ class }}</h4>
+ <h5>NPM: </h5>
+ <p>{{ npm }}<p>
+
+ <h5>Name:</h5>
+ <p>{{ name }}</p>
+
+ <h5>Class:</h5>
+ <p>{{ class }}</p>
+
+ {% if not food_entries %}
+<p>There are no mood data in the food stock.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Food Name</th>
+    <th>Time</th>
+    <th>Description</th>
+    <th>Quantity</th>
+  </tr>
+
+  {% comment %} This is how to display mood data
+  {% endcomment %} 
+  {% for food_entry in food_entries %}
+  <tr>
+    <td>{{food_entry.foods}}</td>
+    <td>{{food_entry.time}}</td>
+    <td>{{food_entry.description}}</td>
+    <td>{{food_entry.quantity}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_food_entry' %}">
+  <button>Add New Food Entry</button>
+</a>
+{% endblock content %}
