@@ -2,8 +2,8 @@
  {% block content %}
  <h1>Dam Shop</h1>
 
- <h5>NPM: </h5>
- <p>{{ npm }}<p>
+ <h5>Appname: </h5>
+ <p>{{ appname }}<p>
 
  <h5>Name:</h5>
  <p>{{ name }}</p>
@@ -22,8 +22,6 @@
     <th>Quantity</th>
   </tr>
 
-  {% comment %} This is how to display mood data
-  {% endcomment %} 
   {% for food_entry in food_entries %}
   <tr>
     <td>{{food_entry.foods}}</td>
