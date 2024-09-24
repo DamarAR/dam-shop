@@ -1,3 +1,4 @@
+import os
 """
 Django settings for dam_shop project.
 
@@ -23,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bo@d0m1(_f=&gp1!bnh^n=*qp8m3^43)n3j$@056*_bh8-su0h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+PRODUCTION = os.getenv("PRODUCTION", False) 
+DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1","damar-aryaputra-damshop.pbp.cs.ui.ac.id"]
 

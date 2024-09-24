@@ -126,3 +126,53 @@ JSON Photo
 JSON_ID Photo
 ![](image/json_id_photo.png)
 
+
+# Assignment 4
+
+**What is the difference between HttpResponseRedirect() and redirect()**
+
+HttpResponseRedirect() is a class-based response that returns an HTTP response with a status code 302 (which indicates a redirect). Meanwhile redirect() is a convenience function provided by Django to simplify the redirection process. In most cases, developers prefer to use redirect() for its simplicity and automatic URL resolution, but HttpResponseRedirect() can be useful if you want to control the URL handling more directly.
+
+**Explain how the MoodEntry model is linked with User!**
+
+In the given Django model, the FoodEntry model is linked to the User model using a ForeignKey relationship. Here's how this works:
+
+```py
+user = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+
+This line defines a relationship between the FoodEntry model and Django's built-in User model from django.contrib.auth.models.In summary, the user field links each FoodEntry to a specific user, creating a clear relationship between the models and making it easy to track which user created each food entry.
+
+**What is the difference between authentication and authorization, and what happens when a user logs in? Explain how Django implements these two concepts.**
+
+Authentication is the process of verifying a user's identity. It answers the question: Who are you? Meanwhile Authorization occurs after authentication and determines what actions or resources a user is allowed to access. It answers the question: What are you allowed to do?
+
+What Happens When a User Logs In ?
+When a user logs into a Django application, the following steps typically occur:
+
+1. User provides credentials: The user submits their username and password through a login form.
+
+2. Authentication Process:
+
+- Django checks the submitted credentials against the stored user data (usually in the User model).
+- If the credentials match (and the user is active), Django considers the user "authenticated".
+- Django creates a session for the user, stores session data (including the user's ID), and sends the session ID back to the user's browser as a cookie.
+
+3. User Session: Once the user is logged in and authenticated, Django assigns them a session. The session is stored server-side, while the session key is stored as a cookie on the client's browser. This allows the user to remain logged in across different views and requests.
+
+4. Authorization: After authentication, every time the user attempts to perform an action (such as accessing a view or editing data), Django checks whether the user has the necessary permissions (authorization) to perform that action.
+
+- Django often checks authorization using permission-based checks (like is_staff or is_superuser) or group-based permissions, which control access to certain views, models, or objects.
+
+Explain how Django implements these two concepts.
+When a user logs in, Django authenticates them, creates a session for them, and then applies authorization checks whenever they attempt to perform specific actions or access restricted resources.
+
+**How does Django remember logged-in users? Explain other uses of cookies and whether all cookies are safe to use.**
+
+- Django Remembers Logged-In Users: Django uses sessions stored server-side and a session cookie (sessionid) stored in the browser to keep users logged in across multiple requests.
+
+- Other Uses of Cookies: Cookies are widely used for tracking user preferences, storing authentication tokens, enabling "remember me" functionality, tracking user activity (analytics), and protecting against CSRF attacks.
+
+- Cookie Safety: Not all cookies are safe to use, especially if they are improperly configured. Storing sensitive data in cookies is a bad practice, and using Secure, HttpOnly, and SameSite flags enhances cookie security. Additionally, restricting the lifetime of cookies and using them only when necessary is important for minimizing security risks.
+
+**
