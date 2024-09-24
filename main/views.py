@@ -18,7 +18,7 @@ def show_main(request):
         'appname' : 'main',
         'name': request.user.username,
         'class': 'KKI',
-        'food_entries': FoodEntry.objects.all(),
+        'food_entries': food_entries,
         'last_login': request.COOKIES['last_login'],
     }
 
