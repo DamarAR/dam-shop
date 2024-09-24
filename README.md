@@ -175,4 +175,70 @@ When a user logs in, Django authenticates them, creates a session for them, and 
 
 - Cookie Safety: Not all cookies are safe to use, especially if they are improperly configured. Storing sensitive data in cookies is a bad practice, and using Secure, HttpOnly, and SameSite flags enhances cookie security. Additionally, restricting the lifetime of cookies and using them only when necessary is important for minimizing security risks.
 
-**
+**Explain how did you implement the checklist step-by-step**
+
+1. Implement Registration, Login, and Logout Functions
+- Registration: Create a form to allow users to sign up. You can use Django’s built-in UserCreationForm or create a custom form. Add necessary fields such as username, password, and email. Once the form is validated, save the user details in the database.
+- Login: Use Django’s built-in authenticate() and login() functions to verify user credentials.
+
+```py
+def login_user(request):
+   if request.method == 'POST':
+      form = AuthenticationForm(data=request.POST)
+
+      if form.is_valid():
+        user = form.get_user()
+        login(request, user)
+        response = HttpResponseRedirect(reverse("main:show_main"))
+        response.set_cookie('last_login', str(datetime.datetime.now()))
+        return response
+
+   else:
+      form = AuthenticationForm(request)
+   context = {'form': form}
+   return render(request, 'login.html', context)
+```
+- Logout: Use Django’s built-in logout() function.
+
+```py
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+```
+2. Create Two User Accounts with Three Dummy Data
+- Create two user accounts directly from the admin panel or programmatically.
+- Create dummy data related to each user using the model connected to the user account. You can either seed this data in your models.py or via Django shell.
+Photo Dummy 1
+![](image/image/photo_dummy_1.png)
+
+Photo Dummy 2
+![](image/photo_dummy_2.png)
+
+3. Connect Product and User Models
+- You need to set up a foreign key relationship between Product and User models so each product is linked to a specific user.
+```py
+@login_required(login_url='/login')
+def show_main(request):
+    food_entries = FoodEntry.objects.filter(user=request.user)
+
+    context = {
+        'appname' : 'main',
+        'name': request.user.username,
+        'class': 'KKI',
+        'food_entries': food_entries,
+        'last_login': request.COOKIES['last_login'],
+    }
+
+    return render(request, "main.html", context)
+```
+
+4. Display Logged-in User Details and Last Login with Cookies
+- After logging in, you can pass the logged-in user’s details to your main page.
+```py
+'last_login': request.COOKIES['last_login']
+  
+```
+
+
