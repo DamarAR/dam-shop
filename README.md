@@ -241,4 +241,263 @@ def show_main(request):
   
 ```
 
+# Assignment 5
+
+**If there are multiple CSS selectors for an HTML element, explain the priority order of these CSS selectors!**
+
+When multiple CSS selectors apply to the same HTML element, CSS uses a specificity rule to determine which style takes precedence. The specificity hierarchy is as follows (from lowest to highest):
+
+1. Type selectors (e.g., div, p, a) have the lowest specificity.
+2. Class selectors (e.g., .container, .button) have higher specificity.
+3. ID selectors (e.g., #header, #footer) have higher specificity than class selectors.
+4. Inline styles (e.g., style="color: blue;" added directly in an HTML element) override all external or internal styles.
+5. !important rule: Any declaration marked with !important takes the highest precedence and overrides any other styles, regardless of specificity.
+
+Example:
+
+```html
+<p id="text" class="content">Hello World</p>
+```
+
+```css
+p {
+  color: blue;
+} /* Type selector */
+.content {
+  color: green;
+} /* Class selector */
+#text {
+  color: red;
+} /* ID selector */
+```
+In this case, the paragraph will appear red because the ID selector has the highest specificity.
+
+**Why does responsive design become an important concept in web application development? Give examples of applications that have and have not implemented responsive design!**
+
+Responsive design ensures that a website or application adapts to different screen sizes and devices, such as mobile phones, tablets, and desktops. As users increasingly access the web on various devices, responsive design becomes essential for a good user experience.
+
+Why it’s important:
+- Improved user experience: A responsive design ensures that content is readable and easy to navigate regardless of the screen size.
+- SEO benefits: Google prioritizes mobile-friendly websites in search rankings.
+- Cost-effective: A responsive website means you don't need to maintain separate sites for mobile and desktop versions.
+
+Example of Applications:
+- Responsive design implemented: Websites like Twitter, YouTube, and Amazon automatically adjust their layouts based on the user’s device.
+- Responsive design not implemented: Older websites or applications, such as Craigslist, may not adjust well to smaller screens, resulting in a poor user experience on mobile devices.
+
+**Explain the differences between margin, border, and padding, and how to implement these three things!**
+
+- Margin: The space outside the border of an element. It separates the element from other elements. Margins are transparent and don’t affect the content inside the element.
+
+Example:
+```css
+div {
+  margin: 10px; /* 10px space outside the border */
+}
+```
+
+
+- Border: The area between the margin and padding, essentially the outline of an element. The border can have different styles (solid, dashed, etc.) and thicknesses.
+
+Example:
+```css
+div {
+  border: 2px solid black; /* Black solid border of 2px thickness */
+}
+```
+
+
+- Padding: The space inside the border, between the content and the border. Padding pushes the content away from the edges of the element.
+
+Example:
+```css
+div {
+  padding: 15px; /* 15px space inside the element, between content and border */
+}
+```
+
+In summary:
+
+- Margin is the space outside the element’s border.
+- Padding is the space inside the element’s border.
+- Border surrounds the padding and content, visually framing the element.
+
+**Explain the concepts of flex box and grid layout along with their uses!**
+Flexbox:
+The flexbox layout is used for arranging items in a one-dimensional space—either in a row (horizontal) or a column (vertical). It is excellent for creating flexible and responsive layouts without requiring fixed dimensions.
+
+Key properties:
+- flex-direction: Specifies the direction of the flex container’s children (row, column, etc.).
+- justify-content: Aligns items horizontally (e.g., center, space-between, space-around).
+- align-items: Aligns items vertically (e.g., flex-start, flex-end, center).
+Example:
+```css
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+```
+Use case: Flexbox is great for layouts like navigation bars, centering content, and aligning items within a container in one direction.
+
+Grid:
+The grid layout is a two-dimensional system that allows you to design both rows and columns. It’s more powerful than flexbox when you need to manage complex layouts that span both axes.
+
+Key properties:
+-grid-template-columns: Defines the number and size of columns.
+-grid-template-rows: Defines the number and size of rows.
+-grid-gap: Specifies the space between grid items.
+```css
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */
+  grid-template-rows: auto;
+  grid-gap: 10px; /* Space between grid items */
+}
+```
+Use case: Grid is ideal for creating complex layouts such as dashboards, gallery views, and multi-sectioned pages.
+
+In summary:
+
+Flexbox is for one-dimensional layouts (either row or column).
+Grid is for two-dimensional layouts (rows and columns together).
+
+
+**Step-by-Step Guide to Implement the Checklist**
+
+1. Implement Functions to Delete and Edit Products
+Create a view that handles editing a product and fetch the product by its id then pass it to the form for editing.
+```py
+def edit_food(request, id):
+    food = FoodEntry.objects.get(pk=id)
+    form = FoodEntryForm(request.POST or None, instance=food)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    
+    context = {'form': form}
+    return render(request, "edit_food.html", context)
+```
+Create a view to delete a product. Fetch the product using its id and upon confirmation, delete it from the database.
+```py
+def delete_food(request, id):
+    food = FoodEntry.objects.get(pk = id)
+
+    food.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
+```
+and lastly add both urls into the urls.py
+
+2. Customize the Design of HTML Templates Using Tailwind CSS
+Include Tailwind CSS in your templates by adding it in your base.html file
+```html
+<script src="https://cdn.tailwindcss.com"></script>
+```
+
+3. Customize the login, register, and add product pages to be as attractive as possible.
+Since I've been making a fruit market website, i customize it with the color green and orange so that it give refreshing colors.
+
+4. Create a Responsive Navigation Bar
+Use Tailwind CSS to create a responsive navbar that adjusts for different screen sizes.
+
+```html
+<nav class="bg-green-400 shadow-lg fixed top-0 left-0 z-40 w-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <h1 class="text-2xl font-bold text-white">Dam-Shop</h1>
+        </div>
+  
+        <!-- Desktop Menu (hidden on mobile) -->
+        <div class="hidden md:flex items-center flex-grow justify-evenly">
+          <a href="#" class="text-white hover:text-yellow-200 hover:font-bold">Home</a>
+          <a href="#" class="text-white hover:text-yellow-200 hover:font-bold">Products</a>
+          <a href="#" class="text-white hover:text-yellow-200 hover:font-bold">Categories</a>
+          <a href="#" class="text-white hover:text-yellow-200 hover:font-bold">Cart</a>
+  
+          <!-- Authenticated User Section -->
+          {% if user.is_authenticated %}
+            <span class="text-white">Welcome, {{ user.username }}</span>
+            <a href="{% url 'main:logout' %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+              Logout
+            </a>
+          {% else %}
+            <a href="{% url 'main:login' %}" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
+              Login
+            </a>
+            <a href="{% url 'main:register' %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+              Register
+            </a>
+          {% endif %}
+        </div>
+  
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <button class="mobile-menu-button">
+            <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="mobile-menu hidden md:hidden px-4 w-full">
+      <div class="space-y-1 mx-auto">
+        <a href="#" class="block text-white hover:text-yellow-200">Home</a>
+        <a href="#" class="block text-white hover:text-yellow-200">Products</a>
+        <a href="#" class="block text-white hover:text-yellow-200">Categories</a>
+        <a href="#" class="block text-white hover:text-yellow-200">Cart</a>
+  
+        <!-- Authenticated User Section -->
+        {% if user.is_authenticated %}
+          <span class="block text-white py-2">Welcome, {{ user.username }}</span>
+          <a href="{% url 'main:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            Logout
+          </a>
+        {% else %}
+          <a href="{% url 'main:login' %}" class="block text-center bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
+            Login
+          </a>
+          <a href="{% url 'main:register' %}" class="block text-center bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            Register
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+      const btn = document.querySelector("button.mobile-menu-button");
+      const menu = document.querySelector(".mobile-menu");
+  
+      btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    </script>
+  </nav>
+  ``` 
+
+5. For each product card, create two buttons to edit and delete the product on that card!
+We just need to add the icon by adding this code, and also get the icon by using Scalable Vector Graphics.
+```html
+<div class="absolute top-0 -right-4 flex space-x-1">
+      <a href="{% url 'main:edit_food' food_entry.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+      </a>
+      <a href="{% url 'main:delete_food' food_entry.pk %}" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
+```
+
+
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from main.views import show_main, create_food_entry, show_xml, show_json, show_xml_by_id, show_json_by_id, registration, login_user, logout_user
+from main.views import show_main, create_food_entry, show_xml, show_json, show_xml_by_id, show_json_by_id, registration, login_user, logout_user, edit_food, delete_food
 
 
 
@@ -16,4 +16,6 @@ urlpatterns = [
     path('registration/', registration, name='registration'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
+    path('edit-food/<uuid:id>/', edit_food, name='edit_food'),
+    path('delete-food/<uuid:id>/', delete_food, name='delete_food'),
 ]

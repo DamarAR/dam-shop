@@ -19,7 +19,7 @@ def show_main(request):
         'name': request.user.username,
         'class': 'KKI',
         'food_entries': food_entries,
-        'last_login': request.COOKIES['last_login'],
+        'last_login': request.COOKIES.get('last_login'),
     }
 
     return render(request, "main.html", context)
@@ -85,4 +85,21 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_food(request, id):
+    food = FoodEntry.objects.get(pk=id)
+    form = FoodEntryForm(request.POST or None, instance=food)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    
+    context = {'form': form}
+    return render(request, "edit_food.html", context)
+
+def delete_food(request, id):
+    food = FoodEntry.objects.get(pk = id)
+
+    food.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
 
