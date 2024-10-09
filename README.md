@@ -499,5 +499,28 @@ We just need to add the icon by adding this code, and also get the icon by using
     </div>
 ```
 
+# Assignment 6
 
+**Explain the benefits of using JavaScript in developing web applications!**
+JavaScript is essential for modern web development due to its ability to create interactive and dynamic user experiences on the client side, while also offering full-stack development capabilities through Node.js for server-side functionality. It benefits from a rich ecosystem of frameworks like React, Angular, and Vue, making development faster and more scalable. JavaScript's support for asynchronous programming, cross-browser compatibility, and real-time features further enhance its flexibility. Additionally, it enables mobile app development through tools like React Native, and integrates easily with other web technologies, making it a versatile and powerful tool for developers.
 
+**Explain why we need to use await when we call fetch()! What would happen if we don't use await?**
+We use await with fetch() to pause the code until the server response is received, allowing us to work directly with the data once it's ready. Without await, the fetch() call returns a promise immediately, but the code keeps running, which means you might try to use the data before it's available, causing errors or unexpected behavior. Using await ensures the code waits for the response and makes it easier to write and read, especially when handling multiple asynchronous operations.
+
+**Why do we need to use the csrf_exempt decorator on the view used for AJAX POST?**
+We use the csrf_exempt decorator on views handling AJAX POST requests in Django when we want to disable CSRF (Cross-Site Request Forgery) protection for that specific view. Normally, Django protects all POST requests by requiring a CSRF token to prevent malicious websites from submitting forms on behalf of users without their consent. However, there are cases where CSRF protection may block legitimate AJAX requests, especially if they don’t properly include the CSRF token in the request headers.
+
+**On this week's tutorial, the user input sanitization is done in the back-end as well. Why can't the sanitization be done just in the front-end?**
+While front-end sanitization improves user experience (e.g., by providing immediate feedback), it cannot be trusted for security. Always sanitize and validate inputs on the back-end to protect your system from attacks and ensure data integrity. The front-end can supplement this process, but the back-end is the last line of defense.
+
+**Explain how you implemented the checklist above step-by-step (not just following the tutorial)!**
+1. Backend - Modify the View for AJAX GET Request: Create a Django view that returns food entries for the logged-in user in JSON format. This view will filter the data based on the currently authenticated user.
+   Frontend - Fetch Data Using AJAX GET: In your JavaScript code, use fetch() to retrieve the data for the logged-in user. This happens when the page loads, displaying the data in a card format.
+2. HTML - Add Button and Modal: Add a button that opens a modal, and inside the modal, create a form for the food entry.
+3. Backend - View to Handle Mood Entry Creation: Create a new view function that will add a new mood entry to the database via an AJAX POST request.
+4. make 
+```py
+path('create-food-entry-ajax', add_food_entry_ajax, name='add_food_entry_ajax'),
+``` 
+in urls.py
+5. After successfully submitting the form, you’ve already ensured that the getMoodEntries() function is called to refresh the mood entries without reloading the page. This happens asynchronously after the mood entry is added.
